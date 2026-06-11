@@ -1,0 +1,22 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno / secretos (la anon key de Supabase es pública y sí se versiona)
+.env
+.env.*
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+*.swp

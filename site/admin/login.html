@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acceso · La Burguesía Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="auth-page">
+  <form class="auth-card" id="loginForm">
+    <div class="brand">LB · Panel administrativo</div>
+    <h1>Iniciar sesión</h1>
+    <div class="warn" id="cfgWarn" hidden>
+      ⚠️ Supabase no está configurado. Edita <code>site/js/supabase-config.js</code> con tu
+      Project URL y anon key. Ver <code>docs/SETUP-SUPABASE.md</code>.
+    </div>
+    <label>Correo
+      <input type="email" id="email" autocomplete="username" required placeholder="tu@correo.com" />
+    </label>
+    <label>Contraseña
+      <input type="password" id="password" autocomplete="current-password" required placeholder="••••••••" />
+    </label>
+    <button class="btn btn-primary" type="submit">Entrar</button>
+    <div class="err" id="err"></div>
+    <a href="../index.html" class="muted" style="font-size:.82rem">← Volver al menú</a>
+  </form>
+
+  <script src="../js/supabase-config.js"></script>
+  <script type="module">
+    import { signIn } from "./js/auth.js";
+    const $ = (id) => document.getElementById(id);
+    if (!window.SUPABASE_READY) {
+      $("cfgWarn").hidden = false;
+    }
+    $("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      $("err").textContent = "";
+      if (!window.SUPABASE_READY) { $("err").textContent = "Configura Supabase primero."; return; }
+      try {
+        await signIn($("email").value.trim(), $("password").value);
+        location.href = "index.html";
+      } catch (ex) {
+        $("err").textContent = ex.message || "No se pudo iniciar sesión.";
+      }
+    });
+  </script>
+</body>
+</html>

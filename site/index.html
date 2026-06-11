@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0d0d" />
+  <title>La Burguesía — Menú</title>
+  <meta name="description" content="Menú digital de La Burguesía: hamburguesas de autor, cortes premium de res, sabor mexicano, alitas y bebidas." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="restaurant.menu" />
+  <meta property="og:title" content="La Burguesía — Menú" />
+  <meta property="og:description" content="Hamburguesas de autor, cortes y sabor mexicano." />
+  <meta property="og:locale" content="es_CO" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "Restaurant", "name": "La Burguesía",
+    "servesCuisine": ["Hamburguesas", "Parrilla", "Mexicana"], "priceRange": "$$",
+    "acceptsReservations": "True" }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand-logo" href="#top">
+        <span class="monogram" data-monogram>LB</span>
+        <span data-brand-name>La Burguesía</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#menu">Menú</a>
+        <a href="#about">Nosotros</a>
+        <a href="#reservar">Reservas</a>
+      </nav>
+      <a class="btn btn-primary nav-cta" href="#reservar">Reservar</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="container hero-content">
+      <span class="eyebrow">Parrilla · Cortes · Mexicana</span>
+      <h1 data-hero-title>La Burguesía</h1>
+      <p data-hero-slogan>Hamburguesas de autor, cortes y sabor mexicano</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#menu">Ver Menú</a>
+        <a class="btn btn-ghost" href="#reservar">Reservar Mesa</a>
+      </div>
+      <div class="hero-scroll">Desliza para explorar ↓</div>
+    </div>
+  </section>
+
+  <!-- DESTACADOS -->
+  <section class="container" id="destacados">
+    <span class="eyebrow">Lo que no te puedes perder</span>
+    <h2 class="section-title">Destacados de la casa</h2>
+    <p class="section-sub">Los favoritos del público y las recomendaciones del chef.</p>
+    <div class="featured-grid" data-featured></div>
+  </section>
+
+  <!-- MENÚ -->
+  <section id="menu" style="padding-top: 20px;">
+    <div class="cat-bar">
+      <div class="container cat-bar-scroll" data-cat-bar></div>
+    </div>
+    <div class="container" data-menu></div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div>
+        <span class="eyebrow">Sobre nosotros</span>
+        <h2 class="section-title" data-about-title>Más que una hamburguesa</h2>
+        <div data-about-body></div>
+      </div>
+      <div class="diffs" data-diffs></div>
+    </div>
+  </section>
+
+  <!-- RESERVAS -->
+  <section class="reservar" id="reservar">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:28px">
+        <span class="eyebrow">Reservas</span>
+        <h2 class="section-title">Reserva tu mesa</h2>
+        <p class="section-sub" style="margin-inline:auto">Completa el formulario y confirmamos por WhatsApp.</p>
+      </div>
+      <form class="form-card" data-reserva>
+        <div class="form-grid">
+          <div class="field"><label>Nombre</label><input name="nombre" required placeholder="Tu nombre" /></div>
+          <div class="field"><label>Teléfono</label><input name="telefono" required placeholder="300 000 0000" /></div>
+          <div class="field"><label>Correo</label><input name="correo" type="email" placeholder="tu@correo.com" /></div>
+          <div class="field"><label>Personas</label>
+            <select name="personas"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select>
+          </div>
+          <div class="field"><label>Fecha</label><input name="fecha" type="date" required /></div>
+          <div class="field"><label>Hora</label><input name="hora" type="time" required /></div>
+          <div class="field full"><label>Comentarios</label><textarea name="comentarios" rows="3" placeholder="Ocasión especial, alergias, etc."></textarea></div>
+        </div>
+        <div class="field full" style="margin-top:16px"><button class="btn btn-primary" type="submit" style="width:100%; justify-content:center">Solicitar reserva</button></div>
+        <div class="form-ok" data-form-ok>✓ ¡Listo! Abrimos WhatsApp para confirmar tu reserva.</div>
+        <p class="form-note">Demo: este formulario abre WhatsApp con tus datos. En producción se conecta al backend.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <a class="brand-logo" href="#top"><span class="monogram" data-monogram>LB</span><span data-brand-name>La Burguesía</span></a>
+        <p style="color:var(--muted); margin-top:12px; max-width:34ch">Hamburguesas de autor, cortes premium y lo mejor de la cocina mexicana.</p>
+        <div class="socials" style="margin-top:16px">
+          <a data-ig href="#" aria-label="Instagram">◐</a>
+          <a data-fb href="#" aria-label="Facebook">f</a>
+          <a data-tk href="#" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+      <div>
+        <h5>Navegación</h5>
+        <a href="#menu">Menú</a><a href="#about">Nosotros</a><a href="#reservar">Reservas</a>
+      </div>
+      <div>
+        <h5>Contacto</h5>
+        <a data-foot-address>Dirección</a>
+        <a data-foot-phone data-wa-link>Teléfono</a>
+      </div>
+    </div>
+    <div class="container copyright">© <span data-year>2026</span> <span data-brand-name>La Burguesía</span>. Todos los derechos reservados.</div>
+  </footer>
+
+  <a class="wa-float" data-wa href="#" aria-label="WhatsApp" target="_blank">✆</a>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="data/restaurant.js"></script>
+  <script src="js/data-source.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel · La Burguesía</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo"><span class="mono">LB</span><span id="rName">La Burguesía</span></div>
+    <span class="spacer"></span>
+    <span class="user" id="userEmail"></span>
+    <a class="btn btn-ghost btn-sm" href="../index.html" target="_blank">Ver menú ↗</a>
+    <button class="btn btn-ghost btn-sm" id="logoutBtn">Salir</button>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab active" data-tab="productos">Productos</button>
+      <button class="tab" data-tab="categorias">Categorías</button>
+      <button class="tab" data-tab="qr">Código QR</button>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <section class="view active" id="view-productos">
+      <div class="card">
+        <h2 id="pFormTitle">Nuevo producto</h2>
+        <form id="prodForm">
+          <div class="grid2">
+            <div class="field full"><label>Nombre</label><input id="pNombre" required placeholder="Ej. Burger Fred" /></div>
+            <div class="field"><label>Categoría</label><select id="pCat" required></select></div>
+            <div class="field"><label>Precio (COP)</label><input id="pPrecio" type="number" min="0" step="500" required placeholder="35000" /></div>
+            <div class="field full"><label>Descripción</label><textarea id="pDesc" rows="2" placeholder="Ingredientes y detalles"></textarea></div>
+            <label class="field check"><input type="checkbox" id="pPop" /> Popular</label>
+            <label class="field check"><input type="checkbox" id="pChef" /> Recomendado del chef</label>
+          </div>
+          <div class="row" style="margin-top:14px">
+            <button class="btn btn-primary" type="submit" id="pSubmit">Agregar producto</button>
+            <button class="btn btn-ghost" type="button" id="pCancel" hidden>Cancelar</button>
+          </div>
+        </form>
+      </div>
+      <div class="card"><h2>Menú actual</h2><div id="prodList"></div></div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="view" id="view-categorias">
+      <div class="card">
+        <h2>Nueva categoría</h2>
+        <form id="catForm">
+          <div class="grid2">
+            <div class="field"><label>Nombre</label><input id="cNombre" required placeholder="Ej. Postres" /></div>
+            <div class="field"><label>Ícono (emoji)</label><input id="cIcono" maxlength="4" placeholder="🍰" /></div>
+            <div class="field full"><label>Descripción</label><input id="cDesc" placeholder="Breve descripción" /></div>
+          </div>
+          <div class="row" style="margin-top:14px"><button class="btn btn-primary" type="submit">Crear categoría</button></div>
+        </form>
+      </div>
+      <div class="card"><h2>Categorías</h2><div id="catList"></div></div>
+    </section>
+
+    <!-- QR -->
+    <section class="view" id="view-qr">
+      <div class="card">
+        <h2>Código QR del menú</h2>
+        <p class="muted" style="margin-bottom:16px">Apunta siempre a la URL fija del restaurante. Personaliza y descarga.</p>
+        <div class="row" style="align-items:flex-start;gap:24px">
+          <div class="qr-stage"><div id="qr"></div></div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="field"><label>Color QR / fondo</label>
+              <div class="row"><input type="color" class="swatch" id="fg" value="#111111" /><input type="color" class="swatch" id="bg" value="#ffffff" /></div>
+            </div>
+            <label class="field check"><input type="checkbox" id="useLogo" checked /> Logo central</label>
+            <div class="row">
+              <button class="btn btn-primary btn-sm" id="dlPng">PNG</button>
+              <button class="btn btn-ghost btn-sm" id="dlSvg">SVG</button>
+              <button class="btn btn-ghost btn-sm" id="dlPrint">PDF / Imprimir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="warn" id="toast" hidden
+       style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;min-width:240px;text-align:center"></div>
+
+  <script src="../js/supabase-config.js"></script>
+  <script src="../data/restaurant.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
+
+  <!-- Generador de QR (clásico, no necesita módulos) -->
+  <script>
+    (function () {
+      var B = (window.RESTAURANT || {}).brand || { monogram: "LB", colorAcento: "#e4b343", menuUrl: "https://la-burguesia.lamenu.app" };
+      function logoSvg(t, c) {
+        var s = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" rx="22" fill="#fff"/><text x="60" y="78" font-family="Georgia,serif" font-size="54" font-weight="700" text-anchor="middle" fill="' + c + '">' + t + '</text></svg>';
+        return "data:image/svg+xml;base64," + btoa(s);
+      }
+      var qr, $ = function (id) { return document.getElementById(id); };
+      function build() {
+        var stage = $("qr"); if (!stage || typeof QRCodeStyling === "undefined") return;
+        stage.innerHTML = "";
+        qr = new QRCodeStyling({
+          width: 240, height: 240, type: "svg", data: B.menuUrl, margin: 8,
+          qrOptions: { errorCorrectionLevel: "H" },
+          dotsOptions: { type: "rounded", color: $("fg").value },
+          cornersSquareOptions: { type: "extra-rounded", color: B.colorAcento },
+          cornersDotOptions: { color: $("fg").value },
+          backgroundOptions: { color: $("bg").value },
+          image: $("useLogo").checked ? logoSvg(B.monogram, B.colorAcento) : undefined,
+          imageOptions: { margin: 6, imageSize: 0.32 },
+        });
+        qr.append(stage);
+      }
+      ["fg", "bg", "useLogo"].forEach(function (id) { var e = $(id); if (e) e.addEventListener("change", build); });
+      $("dlPng").onclick = function () { qr.download({ name: "qr-menu", extension: "png" }); };
+      $("dlSvg").onclick = function () { qr.download({ name: "qr-menu", extension: "svg" }); };
+      $("dlPrint").onclick = function () { window.print(); };
+      build();
+    })();
+  </script>
+</body>
+</html>
