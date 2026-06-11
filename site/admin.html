@@ -2,11 +2,108 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=admin/login.html" />
-  <title>Redirigiendo al panel…</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Burguesía — Código QR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .admin { max-width: 760px; margin: 0 auto; padding: 48px 0; }
+    .qr-card { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: start; }
+    .qr-stage { background:#fff; border-radius: var(--radio); padding: 28px; display:grid; place-items:center; }
+    .qr-stage #qr { width: 260px; height: 260px; }
+    .controls .field { margin-bottom: 14px; }
+    .controls .row { display:flex; gap:10px; flex-wrap:wrap; }
+    .url-pill { font-size:.85rem; color:var(--muted); word-break:break-all; padding:10px 12px; background:var(--panel); border:1px solid var(--linea); border-radius:10px; }
+    .dl-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .swatch { width:38px; height:38px; border:1px solid var(--linea); border-radius:10px; padding:0; cursor:pointer; background:none; }
+    @media (min-width:680px){ .qr-card{ grid-template-columns: 300px 1fr; } }
+    @media print { body * { visibility:hidden; } .qr-stage, .qr-stage * { visibility:visible; } .qr-stage{ position:absolute; inset:0; margin:auto; } }
+  </style>
 </head>
 <body>
-  <p>Redirigiendo al <a href="admin/login.html">panel administrativo</a>…</p>
-  <script>location.replace("admin/login.html");</script>
+  <header class="nav"><div class="container nav-inner">
+    <a class="brand-logo" href="index.html"><span class="monogram" data-monogram>LB</span><span data-brand-name>La Burguesía</span></a>
+    <a class="btn btn-ghost" href="index.html">← Ver menú</a>
+  </div></header>
+
+  <main class="admin container">
+    <span class="eyebrow">Código QR</span>
+    <h1 class="section-title">Descarga tu QR</h1>
+    <p class="section-sub" style="margin-bottom:30px">El QR apunta siempre a la URL del menú. Personalízalo y descárgalo para mesas, redes, facturas y tarjetas.</p>
+
+    <div class="qr-card">
+      <div class="qr-stage"><div id="qr"></div></div>
+
+      <div class="controls">
+        <div class="field"><label>URL de destino</label><div class="url-pill" id="urlPill"></div></div>
+
+        <div class="field"><label>Color del QR</label>
+          <div class="row">
+            <input type="color" class="swatch" id="fg" value="#111111" />
+            <input type="color" class="swatch" id="bg" value="#ffffff" />
+            <span style="color:var(--muted); font-size:.82rem; align-self:center">QR / fondo</span>
+          </div>
+        </div>
+
+        <div class="field"><label><input type="checkbox" id="useLogo" checked /> Logo central (monograma)</label></div>
+
+        <div class="field"><label>Descargar</label>
+          <div class="dl-row">
+            <button class="btn btn-primary" id="dlPng">PNG</button>
+            <button class="btn btn-ghost" id="dlSvg">SVG</button>
+            <button class="btn btn-ghost" id="dlPrint">PDF / Imprimir</button>
+          </div>
+        </div>
+        <p class="form-note" style="text-align:left">PNG para redes, SVG para diseño escalable, “Imprimir → Guardar como PDF” para material físico de alta resolución.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="data/restaurant.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  <script>
+    (function () {
+      var R = window.RESTAURANT, url = R.brand.menuUrl;
+      document.documentElement.style.setProperty("--acento", R.brand.colorAcento);
+      document.getElementById("urlPill").textContent = url;
+
+      function logoSvg(text, color) {
+        var s = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">' +
+          '<rect width="120" height="120" rx="22" fill="#fff"/>' +
+          '<text x="60" y="78" font-family="Georgia,serif" font-size="54" font-weight="700" ' +
+          'text-anchor="middle" fill="' + color + '">' + text + '</text></svg>';
+        return "data:image/svg+xml;base64," + btoa(s);
+      }
+
+      var qr;
+      function build() {
+        var fg = document.getElementById("fg").value;
+        var bg = document.getElementById("bg").value;
+        var useLogo = document.getElementById("useLogo").checked;
+        var stage = document.getElementById("qr");
+        stage.innerHTML = "";
+        qr = new QRCodeStyling({
+          width: 260, height: 260, type: "svg", data: url, margin: 8,
+          qrOptions: { errorCorrectionLevel: "H" },
+          dotsOptions: { type: "rounded", color: fg },
+          cornersSquareOptions: { type: "extra-rounded", color: R.brand.colorAcento },
+          cornersDotOptions: { color: fg },
+          backgroundOptions: { color: bg },
+          image: useLogo ? logoSvg(R.brand.monogram, R.brand.colorAcento) : undefined,
+          imageOptions: { crossOrigin: "anonymous", margin: 6, imageSize: 0.32 },
+        });
+        qr.append(stage);
+      }
+
+      ["fg", "bg", "useLogo"].forEach(function (id) {
+        document.getElementById(id).addEventListener("change", build);
+      });
+      document.getElementById("dlPng").onclick = function () { qr.download({ name: "qr-la-burguesia", extension: "png" }); };
+      document.getElementById("dlSvg").onclick = function () { qr.download({ name: "qr-la-burguesia", extension: "svg" }); };
+      document.getElementById("dlPrint").onclick = function () { window.print(); };
+
+      build();
+    })();
+  </script>
 </body>
 </html>

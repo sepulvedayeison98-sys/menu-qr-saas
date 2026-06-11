@@ -10,39 +10,35 @@ se rebrandea cambiando un solo archivo de configuración.
 menu-qr-saas/
 ├── site/                      # ← el sitio (esto es lo que se publica)
 │   ├── index.html             # menú del cliente
-│   ├── admin/                 # panel administrativo (login + CRUD + QR)
-│   │   ├── login.html         #   acceso con Supabase Auth
-│   │   ├── index.html         #   dashboard protegido
-│   │   └── js/ · css/         #   auth.js, dashboard.js, admin.css
-│   ├── data/restaurant.js     # ⭐ marca + menú estático (fallback / branding)
-│   ├── js/supabase-config.js  # credenciales de Supabase (rellenar)
-│   ├── js/data-source.js      # menú live (Supabase) con fallback estático
+│   ├── admin.html             # generador/descarga del QR (sin login)
+│   ├── data/restaurant.js     # ⭐ ÚNICA fuente de verdad: marca + menú
 │   ├── js/app.js              # render + interacciones del menú
 │   ├── css/styles.css         # estilos premium (tema oro/negro)
 │   └── server.js              # mini servidor estático para previsualizar
-├── db/                        # schema.sql (multi-tenant + RLS) + seed
-└── docs/                      # arquitectura, Fase 2 y setup de Supabase
+├── db/                        # (opcional, futuro) esquema SaaS con Supabase
+└── docs/                      # arquitectura y opción SaaS para escalar después
 ```
+
+> **Enfoque actual: solo `restaurant.js`.** El menú vive en un archivo; para cambiar precios o
+> platos editas ese archivo y rediespliegas. Sin backend, sin base de datos, sin login —
+> carga instantánea. Las carpetas `db/` y `docs/` documentan la opción SaaS (Supabase) por si
+> más adelante quieres crecer a varios restaurantes con login real; hoy no se usan.
 
 ## Cómo correrlo en local
 
 ```powershell
 node site/server.js
 # Menú:  http://localhost:8080
-# Panel: http://localhost:8080/admin/login.html
+# QR:    http://localhost:8080/admin.html
 ```
 
-(O abre `site/index.html` directo en el navegador. El panel necesita internet para la
-librería de QR y el SDK de Supabase vía CDN.)
+(O abre `site/index.html` directo en el navegador. El generador de QR necesita internet para
+su librería vía CDN; el menú funciona 100% offline.)
 
-## Panel administrativo (con login)
+## Editar el menú
 
-- **Acceso:** `http://localhost:8080/admin/login.html`
-- Requiere configurar Supabase una sola vez → ver [`docs/SETUP-SUPABASE.md`](docs/SETUP-SUPABASE.md).
-- Funciones: login real (Supabase Auth), CRUD de productos y categorías, descarga de QR.
-- Sin configurar, el panel muestra instrucciones y el menú funciona en modo estático.
-- Con Supabase configurado, el menú público lee **en vivo** de la base de datos: editas un
-  producto en el panel y aparece al recargar el menú.
+Todo está en `site/data/restaurant.js`. Cambias precios, platos, descripciones o etiquetas
+(`popular`, `chef`), guardas y rediespliegas (o `git push` si tienes deploy automático).
 
 ## Rebrandear para OTRO restaurante (vender la plantilla)
 

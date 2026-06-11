@@ -195,19 +195,10 @@
   }
 
   // --- Init -----------------------------------------------------------------
-  async function init() {
-    // Menú EN VIVO desde Supabase si está configurado; si no, datos estáticos.
-    try {
-      if (window.DataSource) {
-        const cats = await window.DataSource.loadMenu();
-        if (cats && cats.length) R.categorias = cats;
-      }
-    } catch (e) {
-      console.warn("Menú live no disponible, uso datos estáticos:", e.message);
-    }
+  // El menú vive en restaurant.js. Para cambiarlo, editas ese archivo y rediespliegas.
+  document.addEventListener("DOMContentLoaded", () => {
     applyBrand(); renderHero(); renderFeatured(); renderMenu();
     renderAbout(); renderContacto();
     wireForm(); wireReveal(); wireNav(); wireAnalytics();
-  }
-  document.addEventListener("DOMContentLoaded", init);
+  });
 })();
