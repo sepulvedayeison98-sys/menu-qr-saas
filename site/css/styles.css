@@ -1,29 +1,32 @@
 /* =============================================================================
- *  La Burguesía — estilos del menú digital premium
- *  Mobile-first. Variables de marca inyectadas desde la config (ver app.js).
+ *  La Cafeleta — menú digital de cafetería (estilos)
+ *  Mobile-first. Tokens del handoff de diseño (hifi). Variantes: dark / cream.
+ *  El acento (dorado) se inyecta desde restaurant.js -> --acento (ver app.js).
  * ========================================================================== */
 
 :root {
-  --acento: #e4b343;
-  --fondo: #0d0d0d;
-  --texto: #f5f5f5;
+  --gold: #D4AF37;
+  --acento: #D4AF37;          /* lo sobreescribe app.js con brand.colorAcento */
 
-  --panel: #151515;
-  --panel-2: #1c1c1c;
-  --linea: rgba(255, 255, 255, 0.08);
-  --muted: rgba(245, 245, 245, 0.62);
-  --acento-soft: rgba(228, 179, 67, 0.14);
+  /* Vars compartidas que usa la página del QR (admin.html) */
+  --fondo: #0b0b0b;
+  --texto: #EDE7DC;
+  --panel: #1b1b1b;
+  --panel-2: #222;
+  --linea: rgba(212, 175, 55, 0.22);
+  --muted: #9a9183;
+  --radio: 16px;
   --sombra: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
-  --radio: 18px;
   --max: 1120px;
+
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --serif-it: "Cormorant Garamond", Georgia, serif;
+  --label: "Montserrat", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   font-family: var(--font);
   background: var(--fondo);
@@ -32,252 +35,159 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 
-.container { width: min(100% - 40px, var(--max)); margin-inline: auto; }
+/* =============================================================================
+ *  PÁGINA DEL CLIENTE (lo que abre el QR)
+ * ========================================================================== */
 
-section { padding: 72px 0; }
-
-.eyebrow {
-  font-size: 0.78rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--acento);
-  font-weight: 600;
+/* --- Temas (custom props por variante) --- */
+.menu-page.theme-dark {
+  --page: #0b0b0b;  --shell: #111;
+  --hero-bg: linear-gradient(160deg, #1a1a1a, #0d0d0d);
+  --hero-border: rgba(212, 175, 55, 0.25);
+  --title: #F8F5F0;  --tagline: var(--gold);  --section: var(--gold);
+  --thumb-bg: #1b1b1b;  --thumb-border: rgba(212, 175, 55, 0.22);
+  --name: #EDE7DC;  --price: var(--gold);  --desc: #9a9183;
+  --dot: rgba(212, 175, 55, 0.32);  --row-border: rgba(212, 175, 55, 0.16);
+  --thanks: var(--gold);  --footnote: #7d7468;
+}
+.menu-page.theme-cream {
+  --page: #e9e5dd;  --shell: #F8F5F0;
+  --hero-bg: #F8F5F0;
+  --hero-border: rgba(17, 17, 17, 0.08);
+  --title: #111;  --tagline: #6B6B6B;  --section: #111;
+  --thumb-bg: #efeae1;  --thumb-border: rgba(17, 17, 17, 0.08);
+  --name: #111;  --price: #111;  --desc: #7c756b;
+  --dot: rgba(17, 17, 17, 0.28);  --row-border: rgba(17, 17, 17, 0.09);
+  --thanks: #6B6B6B;  --footnote: #9A9A9A;
 }
 
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(1.9rem, 5vw, 3rem);
-  line-height: 1.1;
-  margin: 10px 0 14px;
-  font-weight: 700;
+.menu-page { background: var(--page); }
+.shell { max-width: 480px; margin: 0 auto; min-height: 100vh; background: var(--shell); }
+
+/* --- Hero --- */
+.cafe-hero { height: 360px; background: var(--hero-bg); border-bottom: 1px solid var(--hero-border); position: relative; }
+.cafe-hero-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 0 28px;
+}
+.mono {
+  width: 58px; height: 58px; border: 1px solid var(--gold); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-weight: 600; font-size: 19px; letter-spacing: 1px;
+  color: var(--gold); margin-bottom: 18px;
+}
+.cafe-title {
+  font-family: var(--serif); font-weight: 700; font-size: 34px; letter-spacing: 1.5px;
+  margin: 0; color: var(--title); text-transform: uppercase;
+}
+.cafe-tagline {
+  font-family: var(--serif-it); font-style: italic; font-size: 18px;
+  margin: 9px 0 0; color: var(--tagline);
 }
 
-.section-sub { color: var(--muted); max-width: 52ch; }
+/* --- Separadores ornamentales --- */
+.ornament { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 18px; }
+.ornament .line { height: 1px; width: 44px; background: var(--gold); }
+.ornament .diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+.ornament-short { display: flex; justify-content: center; margin: 10px 0 6px; }
+.ornament-short .line { height: 1px; width: 30px; background: var(--gold); }
 
-/* --- Reveal on scroll ----------------------------------------------------- */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  html { scroll-behavior: auto; }
+/* --- Lista de bebidas --- */
+.menu-section { padding: 34px 26px 0; }
+.section-label {
+  font-family: var(--label); font-weight: 600; font-size: 13px; letter-spacing: 4px;
+  text-align: center; margin: 0; color: var(--section);
 }
+.drink-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.drink { display: flex; align-items: center; gap: 15px; padding: 16px 0; border-bottom: 1px solid var(--row-border); }
+.thumb {
+  flex: none; width: 58px; height: 58px; border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--thumb-bg); border: 1px solid var(--thumb-border);
+  font-family: var(--serif); font-weight: 600; font-size: 22px; color: var(--gold);
+  overflow: hidden;
+}
+.thumb.has-img { background: none; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.drink-body { flex: 1; min-width: 0; }
+.drink-top { display: flex; align-items: baseline; gap: 8px; }
+.drink-name { font-family: var(--font); font-weight: 600; font-size: 16px; color: var(--name); }
+.leader { flex: 1; border-bottom: 1px dotted var(--dot); margin-bottom: 5px; min-width: 8px; }
+.drink-price { font-family: var(--font); font-weight: 600; font-size: 16px; color: var(--price); white-space: nowrap; }
+.drink-desc { font-family: var(--serif-it); font-style: italic; font-size: 15px; line-height: 1.3; margin: 3px 0 0; color: var(--desc); }
 
-/* --- Botones -------------------------------------------------------------- */
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 26px; border-radius: 999px; font-weight: 600;
-  font-size: 0.95rem; cursor: pointer; border: 1px solid transparent;
-  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-}
-.btn:active { transform: scale(.97); }
-.btn-primary { background: var(--acento); color: #181200; }
-.btn-primary:hover { box-shadow: 0 10px 30px -8px var(--acento); transform: translateY(-2px); }
-.btn-ghost { border-color: var(--linea); color: var(--texto); background: rgba(255,255,255,.03); }
-.btn-ghost:hover { border-color: var(--acento); color: var(--acento); }
+/* Pistas de que la foto/nombre son interactivos */
+.drink-name, .thumb { cursor: pointer; }
+.drink-name { transition: color 0.15s ease; }
+.drink-name:hover { color: var(--gold); }
+.thumb { transition: transform 0.15s ease; }
+.thumb:hover { transform: scale(1.05); }
 
-/* --- Header / nav --------------------------------------------------------- */
-.nav {
-  position: sticky; top: 0; z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(13, 13, 13, 0.72);
-  border-bottom: 1px solid transparent;
-  transition: border-color .3s ease, background .3s ease;
+/* --- Lightbox (detalle del producto) --- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(0, 0, 0, 0.82);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
 }
-.nav.scrolled { border-bottom-color: var(--linea); background: rgba(13,13,13,.9); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-.brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; }
-.monogram {
-  width: 38px; height: 38px; display: grid; place-items: center;
-  border: 1.5px solid var(--acento); color: var(--acento);
-  border-radius: 10px; font-family: var(--serif); font-size: 1rem; letter-spacing: .02em;
+.lightbox[hidden] { display: none; }
+.lightbox-card {
+  width: min(100%, 360px);
+  background: var(--shell);
+  border: 1px solid var(--row-border);
+  border-radius: 14px;
+  padding: 16px 16px 22px;
+  text-align: center;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.7);
+  animation: lb-pop 0.22s ease;
 }
-.nav-links { display: none; gap: 26px; font-size: 0.9rem; }
-.nav-links a { color: var(--muted); transition: color .2s; }
-.nav-links a:hover { color: var(--texto); }
-.nav-cta { display: none; }
+@keyframes lb-pop { from { opacity: 0; transform: translateY(8px) scale(0.97); } to { opacity: 1; transform: none; } }
+.lightbox-media { display: flex; justify-content: center; }
+.lightbox-media img { max-width: 100%; max-height: 62vh; width: auto; height: auto; border-radius: 8px; display: block; }
+.lightbox-initial {
+  width: 100%; height: 200px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--thumb-bg); border: 1px solid var(--thumb-border);
+  font-family: var(--serif); font-weight: 600; font-size: 72px; color: var(--gold);
+}
+.lightbox-name { font-family: var(--serif); font-weight: 700; font-size: 22px; color: var(--name); margin: 16px 0 0; }
+.lightbox-price { font-family: var(--font); font-weight: 600; font-size: 16px; color: var(--price); margin-top: 4px; }
+.lightbox-desc { font-family: var(--serif-it); font-style: italic; font-size: 16px; line-height: 1.4; color: var(--desc); margin: 12px 0 0; }
 
-/* --- Hero ----------------------------------------------------------------- */
-.hero {
-  position: relative; min-height: 86vh; display: grid; align-items: center;
-  padding: 90px 0 60px;
-  background:
-    radial-gradient(120% 90% at 80% -10%, var(--acento-soft), transparent 60%),
-    radial-gradient(90% 70% at 10% 110%, rgba(228,179,67,.06), transparent 60%),
-    var(--fondo);
-  text-align: center; overflow: hidden;
-}
-.hero::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
-  background-size: 22px 22px; mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent 75%);
-}
-.hero-content { position: relative; z-index: 2; }
-.hero h1 {
-  font-family: var(--serif); font-weight: 800;
-  font-size: clamp(2.8rem, 11vw, 6rem); line-height: .98; margin: 16px 0;
-}
-.hero h1 .gold { color: var(--acento); font-style: italic; }
-.hero p { color: var(--muted); font-size: clamp(1rem, 3.6vw, 1.25rem); max-width: 40ch; margin: 0 auto 30px; }
-.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.hero-scroll { margin-top: 46px; color: var(--muted); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; }
-
-/* --- Destacados ----------------------------------------------------------- */
-.featured-grid { display: grid; gap: 16px; grid-template-columns: 1fr; margin-top: 34px; }
-.featured-card {
-  position: relative; padding: 26px; border-radius: var(--radio);
-  background: linear-gradient(160deg, var(--panel-2), var(--panel));
-  border: 1px solid var(--linea); overflow: hidden;
-  transition: transform .3s ease, border-color .3s ease;
-}
-.featured-card:hover { transform: translateY(-4px); border-color: rgba(228,179,67,.4); }
-.featured-card .big-emoji { font-size: 2.4rem; }
-.featured-card h3 { font-family: var(--serif); font-size: 1.4rem; margin: 12px 0 6px; }
-.featured-card p { color: var(--muted); font-size: .92rem; }
-.featured-card .price { color: var(--acento); font-weight: 700; font-size: 1.15rem; margin-top: 14px; }
-
-/* --- Menú: barra de categorías sticky ------------------------------------- */
-.cat-bar {
-  position: sticky; top: 64px; z-index: 40; padding: 12px 0;
-  background: rgba(13,13,13,.92); backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--linea);
-}
-.cat-bar-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
-.cat-bar-scroll::-webkit-scrollbar { display: none; }
-.cat-chip {
-  flex: 0 0 auto; padding: 9px 16px; border-radius: 999px; font-size: .85rem; font-weight: 600;
-  border: 1px solid var(--linea); color: var(--muted); background: var(--panel);
-  cursor: pointer; white-space: nowrap; transition: all .2s ease;
-}
-.cat-chip:hover { color: var(--texto); }
-.cat-chip.active { background: var(--acento); color: #181200; border-color: var(--acento); }
-
-/* --- Menú: categorías y tarjetas ------------------------------------------ */
-.cat-block { padding-top: 40px; scroll-margin-top: 130px; }
-.cat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
-.cat-head h2 { font-family: var(--serif); font-size: clamp(1.6rem, 5vw, 2.2rem); }
-.cat-head .cat-icon { font-size: 1.6rem; }
-.cat-head .cat-desc { color: var(--muted); font-size: .9rem; margin-left: auto; display: none; }
-
-.menu-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
-.dish {
-  display: flex; gap: 16px; align-items: flex-start; padding: 20px;
-  border: 1px solid var(--linea); border-radius: var(--radio);
-  background: var(--panel); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-}
-.dish:hover { transform: translateY(-3px); border-color: rgba(228,179,67,.35); box-shadow: var(--sombra); }
-.dish-emoji {
-  flex: 0 0 56px; width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center;
-  font-size: 1.7rem; background: var(--acento-soft); border: 1px solid var(--linea);
-}
-.dish-body { flex: 1; min-width: 0; }
-.dish-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-.dish-name { font-weight: 700; font-size: 1.05rem; }
-.dish-price { color: var(--acento); font-weight: 700; white-space: nowrap; }
-.dish-desc { color: var(--muted); font-size: .88rem; margin-top: 4px; }
-.tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
-.tag {
-  font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 700;
-  padding: 4px 9px; border-radius: 999px;
-}
-.tag.popular { background: rgba(228,179,67,.16); color: var(--acento); }
-.tag.chef { background: rgba(255,255,255,.08); color: var(--texto); }
-
-/* --- Sobre nosotros ------------------------------------------------------- */
-.about { background: linear-gradient(180deg, transparent, rgba(255,255,255,.015)); }
-.about-grid { display: grid; gap: 36px; grid-template-columns: 1fr; align-items: center; }
-.about p { color: var(--muted); margin-bottom: 14px; }
-.diffs { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-.diff { padding: 20px; border: 1px solid var(--linea); border-radius: var(--radio); background: var(--panel); }
-.diff .ico { font-size: 1.6rem; }
-.diff h4 { margin: 10px 0 4px; font-size: 1rem; }
-.diff p { font-size: .84rem; margin: 0; }
-
-/* --- Galería -------------------------------------------------------------- */
-.gallery { columns: 2; column-gap: 14px; }
-.gallery .tile {
-  break-inside: avoid; margin-bottom: 14px; border-radius: var(--radio); overflow: hidden;
-  border: 1px solid var(--linea); display: grid; place-items: center; color: var(--muted);
-  background: linear-gradient(160deg, var(--panel-2), var(--panel)); font-size: 3rem;
-  transition: transform .3s ease;
-}
-.gallery .tile:hover { transform: scale(1.02); }
-.gallery .t1 { height: 200px; } .gallery .t2 { height: 150px; }
-.gallery .t3 { height: 170px; } .gallery .t4 { height: 220px; }
-
-/* --- Testimonios ---------------------------------------------------------- */
-.testi-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
-.testi { padding: 24px; border: 1px solid var(--linea); border-radius: var(--radio); background: var(--panel); }
-.stars { color: var(--acento); letter-spacing: 2px; }
-.testi p { margin: 12px 0; font-size: .98rem; }
-.testi .who { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .88rem; }
-.avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
-  background: var(--acento-soft); color: var(--acento); font-weight: 700; }
-
-/* --- Reservas ------------------------------------------------------------- */
-.reservar { background: radial-gradient(100% 100% at 50% 0, rgba(228,179,67,.06), transparent 60%); }
-.form-card {
-  max-width: 640px; margin-inline: auto; padding: 30px; border-radius: var(--radio);
-  background: var(--panel); border: 1px solid var(--linea);
-}
-.form-grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field.full { grid-column: 1 / -1; }
-.field label { font-size: .8rem; color: var(--muted); }
-.field input, .field textarea, .field select {
-  background: var(--fondo); border: 1px solid var(--linea); border-radius: 12px;
-  color: var(--texto); padding: 12px 14px; font: inherit; font-size: .92rem;
-  transition: border-color .2s;
-}
-.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--acento); }
-.form-note { text-align: center; color: var(--muted); font-size: .82rem; margin-top: 12px; }
-.form-ok { text-align: center; color: var(--acento); font-weight: 600; padding: 10px; display: none; }
-
-/* --- Ubicación ------------------------------------------------------------ */
-.loc-grid { display: grid; gap: 26px; grid-template-columns: 1fr; }
-.loc-list li { list-style: none; padding: 14px 0; border-bottom: 1px solid var(--linea); display: flex; gap: 12px; }
-.loc-list .k { color: var(--acento); min-width: 92px; font-weight: 600; font-size: .9rem; }
-.map-wrap { border-radius: var(--radio); overflow: hidden; border: 1px solid var(--linea); min-height: 260px; }
-.map-wrap iframe { width: 100%; height: 100%; min-height: 260px; border: 0; filter: grayscale(.3) invert(.92) hue-rotate(180deg); }
-
-/* --- Footer --------------------------------------------------------------- */
-footer { border-top: 1px solid var(--linea); padding: 48px 0 32px; }
-.foot-grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
-.foot-grid h5 { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--acento); margin-bottom: 12px; }
-.foot-grid a { color: var(--muted); display: block; padding: 4px 0; }
-.foot-grid a:hover { color: var(--texto); }
-.socials { display: flex; gap: 12px; }
-.socials a { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--linea); border-radius: 10px; }
-.socials a:hover { border-color: var(--acento); color: var(--acento); }
-.copyright { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--linea); }
-
-/* --- WhatsApp flotante ---------------------------------------------------- */
-.wa-float {
-  position: fixed; right: 18px; bottom: 18px; z-index: 60;
-  width: 54px; height: 54px; border-radius: 50%; background: #25d366; color: #fff;
-  display: grid; place-items: center; font-size: 1.5rem; box-shadow: 0 10px 30px -8px rgba(0,0,0,.6);
-  transition: transform .2s;
-}
-.wa-float:hover { transform: scale(1.08); }
+/* --- Footer --- */
+.cafe-footer { text-align: center; padding: 36px 26px 44px; }
+.cafe-footer .ornament { margin-bottom: 16px; margin-top: 0; }
+.thanks { font-family: var(--serif-it); font-style: italic; font-size: 17px; margin: 0; color: var(--thanks); }
+.footnote { font-family: var(--label); font-size: 9.5px; letter-spacing: 1.5px; margin: 14px 0 0; color: var(--footnote); }
 
 /* =============================================================================
- *  RESPONSIVE
+ *  CLASES COMPARTIDAS  —  usadas por la página del QR (admin.html)
  * ========================================================================== */
-@media (min-width: 680px) {
-  .featured-grid { grid-template-columns: repeat(3, 1fr); }
-  .menu-grid { grid-template-columns: 1fr 1fr; }
-  .testi-grid { grid-template-columns: repeat(3, 1fr); }
-  .gallery { columns: 3; }
-  .cat-head .cat-desc { display: block; }
-  .loc-grid { grid-template-columns: 1fr 1fr; }
-  .foot-grid { grid-template-columns: 2fr 1fr 1fr; }
+.container { width: min(100% - 40px, var(--max)); margin-inline: auto; }
+
+.nav { position: sticky; top: 0; z-index: 20; background: rgba(17, 17, 17, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linea); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+.brand-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--serif); font-weight: 700; letter-spacing: 1px; color: var(--texto); }
+.monogram {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border: 1px solid var(--gold); border-radius: 50%;
+  font-family: var(--serif); font-weight: 600; font-size: 14px; color: var(--gold);
 }
-@media (min-width: 920px) {
-  .nav-links { display: flex; }
-  .nav-cta { display: inline-flex; }
-  .about-grid { grid-template-columns: 1.1fr 1fr; }
-  section { padding: 96px 0; }
-}
+
+.eyebrow { font-family: var(--label); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--acento); font-weight: 600; }
+.section-title { font-family: var(--serif); font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.1; margin: 10px 0 14px; font-weight: 700; color: var(--texto); }
+.section-sub { color: var(--muted); max-width: 52ch; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 999px; border: 1px solid transparent; font: inherit; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--acento); color: #111; }
+.btn-ghost { background: transparent; border-color: var(--linea); color: var(--texto); }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 0.85rem; color: var(--muted); }
+.field input, .field select, .field textarea { font: inherit; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--linea); background: var(--panel); color: var(--texto); }
+.form-note { font-size: 0.78rem; color: var(--muted); margin-top: 10px; }

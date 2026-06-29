@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>La Burguesía — Código QR</title>
+  <title>La Cafeleta — Código QR</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
@@ -22,7 +22,7 @@
 </head>
 <body>
   <header class="nav"><div class="container nav-inner">
-    <a class="brand-logo" href="index.html"><span class="monogram" data-monogram>LB</span><span data-brand-name>La Burguesía</span></a>
+    <a class="brand-logo" href="index.html"><span class="monogram" data-monogram>LC</span><span data-brand-name>La Cafeleta</span></a>
     <a class="btn btn-ghost" href="index.html">← Ver menú</a>
   </div></header>
 
@@ -64,6 +64,9 @@
   <script>
     (function () {
       var R = window.RESTAURANT, url = R.brand.menuUrl;
+      var slug = (R.brand.nombre || "menu").toString().toLowerCase()
+        .normalize("NFD").replace(/[̀-ͯ]/g, "")
+        .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "menu";
       document.documentElement.style.setProperty("--acento", R.brand.colorAcento);
       document.getElementById("urlPill").textContent = url;
 
@@ -98,8 +101,8 @@
       ["fg", "bg", "useLogo"].forEach(function (id) {
         document.getElementById(id).addEventListener("change", build);
       });
-      document.getElementById("dlPng").onclick = function () { qr.download({ name: "qr-la-burguesia", extension: "png" }); };
-      document.getElementById("dlSvg").onclick = function () { qr.download({ name: "qr-la-burguesia", extension: "svg" }); };
+      document.getElementById("dlPng").onclick = function () { qr.download({ name: "qr-" + slug, extension: "png" }); };
+      document.getElementById("dlSvg").onclick = function () { qr.download({ name: "qr-" + slug, extension: "svg" }); };
       document.getElementById("dlPrint").onclick = function () { window.print(); };
 
       build();

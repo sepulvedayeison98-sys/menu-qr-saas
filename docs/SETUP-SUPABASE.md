@@ -6,7 +6,7 @@ menú y el menú público leyendo en vivo de la base de datos.
 ## 1. Crear el proyecto
 
 1. Entra a <https://supabase.com> y crea una cuenta (gratis).
-2. **New project** → ponle nombre (ej. `menu-burguesia`), elige una contraseña de BD y la
+2. **New project** → ponle nombre (ej. `menu-tu-restaurante`), elige una contraseña de BD y la
    región más cercana. Espera ~2 min a que aprovisione.
 
 ## 2. Cargar el esquema y el menú
@@ -14,8 +14,8 @@ menú y el menú público leyendo en vivo de la base de datos.
 1. En el proyecto, ve a **SQL Editor → New query**.
 2. Pega y ejecuta **todo** el contenido de [`db/schema.sql`](../db/schema.sql). (Crea tablas,
    RLS, lectura pública del menú.)
-3. Nueva query: pega y ejecuta [`db/seed_la_burguesia.sql`](../db/seed_la_burguesia.sql).
-   (Carga el restaurante La Burguesía con su menú.)
+3. Nueva query: pega y ejecuta [`db/seed_example.sql`](../db/seed_example.sql).
+   (Carga un restaurante de ejemplo; edítalo con tus datos.)
 
 ## 3. Crear tu usuario admin y vincularlo al restaurante
 
@@ -27,7 +27,7 @@ menú y el menú público leyendo en vivo de la base de datos.
 insert into profiles (id, tenant_id, email, rol)
 values (
   'PEGA-AQUI-EL-USER-UID',
-  '00000000-0000-0000-0000-000000000001',  -- tenant La Burguesía (del seed)
+  '00000000-0000-0000-0000-000000000001',  -- tenant del seed de ejemplo
   'tu@correo.com',
   'owner'
 );
@@ -44,7 +44,7 @@ values (
 window.SUPABASE_CONFIG = {
   url: "https://xxxxxxxx.supabase.co",  // tu Project URL
   anonKey: "eyJhbGciOi...",             // tu anon public key
-  restaurantSlug: "la-burguesia",
+  restaurantSlug: "tu-restaurante",
 };
 ```
 

@@ -1,7 +1,7 @@
 # Arquitectura — Plataforma SaaS de Menús Digitales QR
 
 > Documento de diseño. Stack de entrega: **HTML estático premium**. Control plane multi-tenant separado.
-> Caso base: restaurante **LA BURGUESÍA**.
+> Caso base: restaurante de ejemplo (ver `db/seed_example.sql`).
 
 ## Objetivo
 
@@ -151,7 +151,7 @@ infraestructura extra.
 
 ## Roadmap por fases
 
-- **Fase 1 — MVP vendible:** menú estático premium (LA BURGUESÍA) + QR descargable + branding por config.
+- **Fase 1 — MVP vendible:** menú estático premium + QR descargable + branding por config.
 - **Fase 2 — Control plane:** Supabase + auth + panel admin CRUD + multi-tenant con RLS.
 - **Fase 3 — Monetización:** billing (Wompi) + alta automática de tenants + subdominios.
 - **Fase 4 — Inteligencia:** analíticas, dashboards, modo offline, temas de marca.
@@ -160,8 +160,7 @@ infraestructura extra.
 
 ## Oportunidades detectadas
 
-- El menú de LA BURGUESÍA ya tiene etiquetas implícitas de venta (combos, "Big Animal",
-  recomendados) → modelarlas como `es_popular`/`recomendado_chef` desde el día 1.
+- Etiquetas de venta del menú (populares, recomendados) → modelarlas como
+  `es_popular`/`recomendado_chef` desde el día 1.
 - Precios en COP con miles (`$35.000`) → guardar como entero y formatear en el render.
-- Categorías muy claras (Hamburguesas, Cortes, Mexicana, Bebidas) → caso de datos limpio ideal
-  para validar el esquema.
+- Categorías claras → caso de datos limpio ideal para validar el esquema.

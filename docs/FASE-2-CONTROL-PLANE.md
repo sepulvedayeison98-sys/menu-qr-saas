@@ -1,8 +1,8 @@
 # Fase 2 — Control Plane (backend, auth, API)
 
 Implementación del plano de control sobre **Supabase (Postgres + Auth + Storage)**.
-El esquema y las políticas RLS viven en [`db/schema.sql`](../db/schema.sql); el seed real de
-LA BURGUESÍA en [`db/seed_la_burguesia.sql`](../db/seed_la_burguesia.sql).
+El esquema y las políticas RLS viven en [`db/schema.sql`](../db/schema.sql); el seed de
+ejemplo en [`db/seed_example.sql`](../db/seed_example.sql).
 
 ## Identidad y aislamiento
 

@@ -1,4 +1,4 @@
-# La Burguesía — Menú Digital QR (plantilla premium)
+# Menú Digital QR (plantilla premium)
 
 Menú digital estático, mobile-first, listo para acceder por **código QR**. Construido sin
 dependencias de build: HTML + CSS + JS puro. Pensado para **revenderse como plantilla**:
@@ -70,4 +70,4 @@ Apunta tu dominio/subdominio y el QR del panel ya queda funcional.
 
 Ver [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) y
 [`docs/FASE-2-CONTROL-PLANE.md`](docs/FASE-2-CONTROL-PLANE.md). El esquema multi-tenant con RLS
-está en [`db/schema.sql`](db/schema.sql) y el seed real en [`db/seed_la_burguesia.sql`](db/seed_la_burguesia.sql).
+está en [`db/schema.sql`](db/schema.sql) y un seed de ejemplo en [`db/seed_example.sql`](db/seed_example.sql).

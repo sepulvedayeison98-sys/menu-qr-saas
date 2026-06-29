@@ -1,0 +1,5 @@
+# No publicar secretos ni utilidades locales
+.env.local
+.env*
+.vercel
+server.js
