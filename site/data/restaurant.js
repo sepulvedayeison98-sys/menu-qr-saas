@@ -32,7 +32,7 @@ window.RESTAURANT = {
         { nombre: "Aromática", precio: 1500, desc: "Infusión de frutas y hierbas naturales." },
         { nombre: "Capuchino", precio: 6000, aperitivo: true, img: "img/capuchino.jpg", desc: "Espresso coronado con espuma de leche sedosa." },
         { nombre: "Milo Caliente", precios: [{ tam: "9 oz", precio: 4000 }, { tam: "12 oz", precio: 6000 }], desc: "Chocolate malteado caliente y reconfortante." },
-        { nombre: "Canelazo", precio: 5000, desc: "Amareto, canela y leche dulce." },
+        { nombre: "Canelazo", precio: 5000, img: "img/canelazo.jpg", desc: "Amareto, canela y leche dulce." },
         { nombre: "Café con Leche (perico)", precio: 2800, img: "img/cafe-con-leche.jpg", desc: "El equilibrio clásico de café y leche caliente." },
       ],
     },
