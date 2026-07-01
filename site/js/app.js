@@ -30,32 +30,61 @@
   const foot = $("[data-footnote]");
   if (foot) foot.textContent = b.footnote || ("© " + new Date().getFullYear() + " " + (b.nombre || "").toUpperCase());
 
-  // --- Lista de bebidas -----------------------------------------------------
-  const bebidas = R.bebidas || [];
-  const list = $("[data-drinks]");
-  if (list) {
-    bebidas.forEach((d, i) => {
-      const nombre = d.nombre || d.name || "";
-      const inicial = nombre.trim().charAt(0).toUpperCase();
-      const precio = cop(d.precio != null ? d.precio : d.price);
-      const desc = d.desc || "";
-      // Si la bebida tiene foto (campo `img`) se muestra; si no, la inicial dorada.
-      const thumb = d.img
-        ? `<div class="thumb has-img"><img src="${esc(d.img)}" alt="${esc(nombre)}" loading="lazy"></div>`
-        : `<div class="thumb">${esc(inicial)}</div>`;
-      list.appendChild(el(`
-        <li class="drink" data-index="${i}">
-          ${thumb}
-          <div class="drink-body">
-            <div class="drink-top">
-              <span class="drink-name">${esc(nombre)}</span>
-              <span class="leader"></span>
-              <span class="drink-price">${precio}</span>
+  // --- Menú por categorías --------------------------------------------------
+  const cats = R.categorias || [];
+  const allItems = [];        // aplanado, indexado por data-index para el lightbox
+  const menu = $("[data-menu]");
+
+  // Celda de precio: único ("$X") o varios tamaños ("9 oz $X").
+  function priceCell(d) {
+    if (Array.isArray(d.precios) && d.precios.length) {
+      return `<span class="drink-price multi">` +
+        d.precios.map((p) => `<span class="pl"><span class="tam">${esc(p.tam)}</span>${cop(p.precio)}</span>`).join("") +
+        `</span>`;
+    }
+    return `<span class="drink-price">${cop(d.precio)}</span>`;
+  }
+
+  if (menu) {
+    cats.forEach((cat) => {
+      const section = el(`
+        <section class="menu-section">
+          <p class="section-label">${esc((cat.nombre || "").toUpperCase())}</p>
+          <div class="ornament-short"><span class="line"></span></div>
+          <ul class="drink-list"></ul>
+        </section>`);
+      const ul = $(".drink-list", section);
+      (cat.items || []).forEach((d) => {
+        const idx = allItems.push(d) - 1;
+        const nombre = d.nombre || "";
+        const inicial = nombre.trim().charAt(0).toUpperCase();
+        const thumb = d.img
+          ? `<div class="thumb has-img"><img src="${esc(d.img)}" alt="${esc(nombre)}" loading="lazy"></div>`
+          : `<div class="thumb">${esc(inicial)}</div>`;
+        const apx = d.aperitivo ? `<span class="aperitivo-mark" title="Aperitivo opcional">*</span>` : "";
+        const desc = d.desc ? `<p class="drink-desc">${esc(d.desc)}</p>` : "";
+        ul.appendChild(el(`
+          <li class="drink" data-index="${idx}">
+            ${thumb}
+            <div class="drink-body">
+              <div class="drink-top">
+                <span class="drink-name">${esc(nombre)}${apx}</span>
+                <span class="leader"></span>
+                ${priceCell(d)}
+              </div>
+              ${desc}
             </div>
-            <p class="drink-desc">${esc(desc)}</p>
-          </div>
-        </li>`));
+          </li>`));
+      });
+      menu.appendChild(section);
     });
+  }
+
+  // Nota de aperitivo opcional (ítems marcados con *)
+  const apNote = $("[data-aperitivo-note]");
+  if (apNote && R.aperitivo) {
+    apNote.innerHTML = `<span class="aperitivo-mark">*</span> Aperitivo opcional: ${esc(R.aperitivo)}.`;
+    apNote.hidden = false;
   }
 
   // --- Lightbox: clic en foto/nombre -> imagen grande + descripción ---------
@@ -82,8 +111,12 @@
       ? `<img src="${esc(d.img)}" alt="${esc(nombre)}">`
       : `<div class="lightbox-initial">${esc(inicial)}</div>`;
     lbName.textContent = nombre;
-    lbPrice.textContent = cop(d.precio != null ? d.precio : d.price);
-    lbDesc.textContent = d.desc || "";
+    lbPrice.textContent = Array.isArray(d.precios) && d.precios.length
+      ? d.precios.map((p) => `${p.tam} ${cop(p.precio)}`).join("  ·  ")
+      : cop(d.precio);
+    let desc = d.desc || "";
+    if (d.aperitivo && R.aperitivo) desc += (desc ? "  " : "") + "· Con aperitivo opcional.";
+    lbDesc.textContent = desc;
     lb.hidden = false;
     document.body.style.overflow = "hidden";
   }
@@ -93,11 +126,11 @@
   }
 
   // Solo abre al tocar la foto o el nombre (no la descripción ni el precio).
-  if (list) {
-    list.addEventListener("click", (e) => {
+  if (menu) {
+    menu.addEventListener("click", (e) => {
       if (!e.target.closest(".drink-name") && !e.target.closest(".thumb")) return;
       const li = e.target.closest(".drink");
-      if (li) openLightbox(bebidas[+li.dataset.index]);
+      if (li) openLightbox(allItems[+li.dataset.index]);
     });
   }
   // Salir: clic fuera de la tarjeta o tecla Esc.

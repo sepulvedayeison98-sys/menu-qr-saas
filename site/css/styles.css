@@ -120,6 +120,17 @@ a { color: inherit; text-decoration: none; }
 .drink-price { font-family: var(--font); font-weight: 600; font-size: 16px; color: var(--price); white-space: nowrap; }
 .drink-desc { font-family: var(--serif-it); font-style: italic; font-size: 15px; line-height: 1.3; margin: 3px 0 0; color: var(--desc); }
 
+/* Precios con varios tamaños (ej. Milo 9 oz / 12 oz) */
+.drink-price.multi { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+.drink-price.multi .pl { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+.drink-price.multi .tam { font-family: var(--serif-it); font-style: italic; font-weight: 400; font-size: 12.5px; color: var(--desc); }
+
+/* Marca de aperitivo opcional (*) y su nota al pie */
+.aperitivo-mark { color: var(--gold); font-weight: 600; }
+.drink-name .aperitivo-mark { margin-left: 3px; font-size: 0.85em; }
+.menu-note { text-align: center; font-family: var(--serif-it); font-style: italic; font-size: 13.5px; line-height: 1.4; color: var(--desc); margin: 0; padding: 26px 30px 0; }
+.menu-note[hidden] { display: none; }
+
 /* Pistas de que la foto/nombre son interactivos */
 .drink-name, .thumb { cursor: pointer; }
 .drink-name { transition: color 0.15s ease; }
