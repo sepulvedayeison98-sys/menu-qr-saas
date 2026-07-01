@@ -11,6 +11,7 @@ window.RESTAURANT = {
     nombre: "La Cafeleta",
     tagline: "Café Colombiano Premium",
     monogram: "LC",
+    heroImg: "img/cafeleta-cart.jpg",  // foto de fondo del hero (opcional)
     variant: "dark",                // "dark" (negro) | "cream" (crema)
     colorAcento: "#D4AF37",         // dorado de marca (también usado por el QR)
     menuUrl: "https://la-cafeleta-menu.vercel.app",  // ← URL fija a la que apunta el QR

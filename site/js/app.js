@@ -22,6 +22,14 @@
   document.body.classList.add("theme-" + variant);
   document.documentElement.style.setProperty("--acento", b.colorAcento || "#D4AF37");
 
+  // Foto de fondo del hero (opcional)
+  const hero = $(".cafe-hero");
+  if (hero && b.heroImg) {
+    hero.classList.add("has-photo");
+    // La foto se pone directo en el elemento (url relativa al documento).
+    hero.style.backgroundImage = `url("${b.heroImg}")`;
+  }
+
   // --- Marca ----------------------------------------------------------------
   if (b.nombre) document.title = b.nombre + " — Menú";
   $$("[data-brand-name]").forEach((n) => (n.textContent = b.nombre || ""));
