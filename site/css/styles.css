@@ -75,32 +75,23 @@ a { color: inherit; text-decoration: none; }
   text-align: center; padding: 0 28px;
 }
 
-/* Hero con foto de fondo (brand.heroImg): título arriba, carrito debajo */
-.cafe-hero.has-photo {
-  height: auto; min-height: 580px; border-bottom: none;
+/* Foto del carrito como banner bajo el título (brand.heroImg) */
+.hero-photo {
+  height: 400px;
   background-size: cover;
-  background-position: center 38%;
+  background-position: center 33%;
   background-repeat: no-repeat;
+  position: relative;
 }
-.cafe-hero.has-photo::before {
+.hero-photo[hidden] { display: none; }
+.hero-photo::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg,
-    rgba(10, 10, 10, 0.92) 0%,
-    rgba(10, 10, 10, 0.62) 22%,
-    rgba(10, 10, 10, 0.3) 42%,
-    rgba(10, 10, 10, 0.12) 58%,
-    rgba(17, 17, 17, 0.62) 82%,
+    var(--shell) 0%,
+    rgba(17, 17, 17, 0) 22%,
+    rgba(17, 17, 17, 0) 78%,
     var(--shell) 100%);
 }
-.cafe-hero.has-photo .cafe-hero-inner {
-  justify-content: flex-start;
-  padding-top: 46px;
-  z-index: 1;
-}
-/* Legibilidad del texto sobre la foto */
-.cafe-hero.has-photo .cafe-title,
-.cafe-hero.has-photo .cafe-tagline { text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.95); }
-.cafe-hero.has-photo .mono { box-shadow: 0 2px 18px rgba(0, 0, 0, 0.6); background: rgba(10, 10, 10, 0.35); }
 .mono {
   width: 58px; height: 58px; border: 1px solid var(--gold); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;

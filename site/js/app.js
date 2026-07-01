@@ -23,11 +23,11 @@
   document.documentElement.style.setProperty("--acento", b.colorAcento || "#D4AF37");
 
   // Foto de fondo del hero (opcional)
-  const hero = $(".cafe-hero");
-  if (hero && b.heroImg) {
-    hero.classList.add("has-photo");
-    // La foto se pone directo en el elemento (url relativa al documento).
-    hero.style.backgroundImage = `url("${b.heroImg}")`;
+  // Foto del carrito como banner bajo el título (url relativa al documento).
+  const heroPhoto = $("[data-hero-photo]");
+  if (heroPhoto && b.heroImg) {
+    heroPhoto.style.backgroundImage = `url("${b.heroImg}")`;
+    heroPhoto.hidden = false;
   }
 
   // --- Marca ----------------------------------------------------------------
