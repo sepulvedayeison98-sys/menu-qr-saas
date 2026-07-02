@@ -28,7 +28,7 @@ window.RESTAURANT = {
       items: [
         { nombre: "Tinto", precio: 1500, img: "img/tinto.jpg", desc: "Café negro colombiano recién pasado." },
         { nombre: "Tinto con Amareto", precio: 3500, desc: "Tinto con un toque de licor de almendra." },
-        { nombre: "Long Black", precio: 2500, desc: "Tinto largo, espresso alargado con agua caliente." },
+        { nombre: "Long Black", precio: 2500, img: "img/long-black.jpg", desc: "Tinto largo, espresso alargado con agua caliente." },
         { nombre: "Aromática", precio: 1500, desc: "Infusión de frutas y hierbas naturales." },
         { nombre: "Capuchino", precio: 6000, aperitivo: true, img: "img/capuchino.jpg", desc: "Espresso coronado con espuma de leche sedosa." },
         { nombre: "Milo Caliente", precios: [{ tam: "9 oz", precio: 4000 }, { tam: "12 oz", precio: 6000 }], desc: "Chocolate malteado caliente y reconfortante." },
