@@ -42,6 +42,17 @@
   const cats = R.categorias || [];
   const allItems = [];        // aplanado, indexado por data-index para el lightbox
   const menu = $("[data-menu]");
+  const slug = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+  // Barra sticky de categorías (salta a cada sección)
+  let catNav = null;
+  if (menu && cats.length > 1) {
+    catNav = el(`<nav class="cat-nav" aria-label="Categorías del menú"></nav>`);
+    cats.forEach((cat) => {
+      catNav.appendChild(el(`<a href="#cat-${slug(cat.nombre)}">${esc(cat.nombre)}</a>`));
+    });
+    menu.parentNode.insertBefore(catNav, menu);
+  }
 
   // Celda de precio: único ("$X") o varios tamaños ("9 oz $X").
   function priceCell(d) {
@@ -56,7 +67,7 @@
   if (menu) {
     cats.forEach((cat) => {
       const section = el(`
-        <section class="menu-section">
+        <section class="menu-section" id="cat-${slug(cat.nombre)}">
           <p class="section-label">${esc((cat.nombre || "").toUpperCase())}</p>
           <div class="ornament-short"><span class="line"></span></div>
           <ul class="drink-list"></ul>
@@ -88,6 +99,17 @@
     });
   }
 
+  // Resalta en la barra la categoría visible al hacer scroll
+  if (catNav && "IntersectionObserver" in window) {
+    const links = $$("a", catNav);
+    const setActive = (id) => links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) setActive(en.target.id); });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    $$(".menu-section", menu).forEach((s) => io.observe(s));
+    setActive("cat-" + slug(cats[0].nombre));
+  }
+
   // Nota de aperitivo opcional (ítems marcados con *)
   const apNote = $("[data-aperitivo-note]");
   if (apNote && R.aperitivo) {
@@ -99,6 +121,7 @@
   const lb = el(`
     <div class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Detalle del producto">
       <div class="lightbox-card" role="document">
+        <button class="lightbox-close" type="button" aria-label="Cerrar">&times;</button>
         <div class="lightbox-media"></div>
         <h3 class="lightbox-name"></h3>
         <div class="lightbox-price"></div>
@@ -141,7 +164,8 @@
       if (li) openLightbox(allItems[+li.dataset.index]);
     });
   }
-  // Salir: clic fuera de la tarjeta o tecla Esc.
+  // Salir: botón ×, clic fuera de la tarjeta o tecla Esc.
+  $(".lightbox-close", lb).addEventListener("click", closeLightbox);
   lb.addEventListener("click", (e) => { if (e.target === lb) closeLightbox(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) closeLightbox(); });
 })();

@@ -39,9 +39,9 @@ window.RESTAURANT = {
     {
       nombre: "Fríos",
       items: [
-        { nombre: "Frappuccino / Granizado", precio: 7500, aperitivo: true, img: "img/frappuccino.png", desc: "Espresso batido con hielo y crema de leche." },
+        { nombre: "Frappuccino / Granizado", precio: 7500, aperitivo: true, img: "img/frappuccino.jpg", desc: "Espresso batido con hielo y crema de leche." },
         { nombre: "Café Milenio", precio: 8500, aperitivo: true, img: "img/cafe-milenio.jpg", desc: "Café helado con chantillí." },
-        { nombre: "Milo Frío", precios: [{ tam: "14 oz", precio: 6500 }, { tam: "9 oz", precio: 4000 }], img: "img/milo-frio.jpg", desc: "Chocolate malteado helado y cremoso." },
+        { nombre: "Milo Frío", precios: [{ tam: "9 oz", precio: 4000 }, { tam: "14 oz", precio: 6500 }], img: "img/milo-frio.jpg", desc: "Chocolate malteado helado y cremoso." },
         { nombre: "Ice Coffee", precio: 3000, img: "img/ice-coffee.jpg", desc: "Café frío servido sobre hielo." },
       ],
     },
