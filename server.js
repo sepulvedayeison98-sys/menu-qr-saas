@@ -1,9 +1,10 @@
-/* Mini servidor estático para previsualizar el menú. Sin dependencias. */
+/* Mini servidor estático para previsualizar el menú. Sin dependencias.
+ * Sirve la carpeta site/ (lo que se publica). Uso: node server.js */
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, "site");
 const PORT = process.env.PORT || 8080;
 const TYPES = {
   ".html": "text/html; charset=utf-8",

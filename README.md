@@ -13,8 +13,8 @@ menu-qr-saas/
 │   ├── admin.html             # generador/descarga del QR (sin login)
 │   ├── data/restaurant.js     # ⭐ ÚNICA fuente de verdad: marca + menú
 │   ├── js/app.js              # render + interacciones del menú
-│   ├── css/styles.css         # estilos premium (tema oro/negro)
-│   └── server.js              # mini servidor estático para previsualizar
+│   └── css/styles.css         # estilos premium (tema oro/negro)
+├── server.js                  # mini servidor estático para previsualizar en local
 ├── db/                        # (opcional, futuro) esquema SaaS con Supabase
 └── docs/                      # arquitectura y opción SaaS para escalar después
 ```
@@ -27,7 +27,7 @@ menu-qr-saas/
 ## Cómo correrlo en local
 
 ```powershell
-node site/server.js
+node server.js
 # Menú:  http://localhost:8080
 # QR:    http://localhost:8080/admin.html
 ```

@@ -26,7 +26,7 @@ window.RESTAURANT = {
     {
       nombre: "Calientes",
       items: [
-        { nombre: "Tinto", precio: 1500, desc: "Café negro colombiano recién pasado." },
+        { nombre: "Tinto", precio: 1500, img: "img/tinto.jpg", desc: "Café negro colombiano recién pasado." },
         { nombre: "Tinto con Amareto", precio: 3500, desc: "Tinto con un toque de licor de almendra." },
         { nombre: "Long Black", precio: 2500, desc: "Tinto largo, espresso alargado con agua caliente." },
         { nombre: "Aromática", precio: 1500, desc: "Infusión de frutas y hierbas naturales." },
