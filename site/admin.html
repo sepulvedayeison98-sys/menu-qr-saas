@@ -19,7 +19,6 @@
     .dl-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
     .swatch { width:38px; height:38px; border:1px solid var(--linea); border-radius:10px; padding:0; cursor:pointer; background:none; }
     @media (min-width:680px){ .qr-card{ grid-template-columns: 300px 1fr; } }
-    @media print { body * { visibility:hidden; } .qr-stage, .qr-stage * { visibility:visible; } .qr-stage{ position:absolute; inset:0; margin:auto; } }
   </style>
 </head>
 <body>
@@ -105,7 +104,28 @@
       });
       document.getElementById("dlPng").onclick = function () { qr.download({ name: "qr-" + slug, extension: "png" }); };
       document.getElementById("dlSvg").onclick = function () { qr.download({ name: "qr-" + slug, extension: "svg" }); };
-      document.getElementById("dlPrint").onclick = function () { window.print(); };
+
+      // Imprimir/PDF en una ventana aparte que SOLO contiene el QR (nada de
+      // nav/sticky/etc. de esta pagina) para que salga igual en cualquier
+      // navegador, en vez de depender de un @media print sobre esta pagina.
+      document.getElementById("dlPrint").onclick = function () {
+        var svgMarkup = document.getElementById("qr").innerHTML;
+        var win = window.open("", "_blank");
+        if (!win) { window.print(); return; }
+        win.document.write(
+          "<!DOCTYPE html><html><head><title>QR — " + (R.brand.nombre || "Menú") + "</title><style>" +
+          "@page { margin: 15mm; }" +
+          "html, body { margin: 0; padding: 0; background: #fff; }" +
+          "body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }" +
+          ".qr-print { width: 70mm; height: 70mm; }" +
+          ".qr-print svg { width: 100%; height: 100%; display: block; }" +
+          "</style></head><body>" +
+          '<div class="qr-print">' + svgMarkup + "</div>" +
+          "<script>window.onload=function(){setTimeout(function(){window.focus();window.print();},200);};<\/script>" +
+          "</body></html>"
+        );
+        win.document.close();
+      };
 
       build();
     })();
