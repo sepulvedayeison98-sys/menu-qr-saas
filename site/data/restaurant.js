@@ -30,6 +30,7 @@ window.RESTAURANT = {
         { nombre: "Tinto con Amareto", precio: 3500, desc: "Tinto con un toque de licor de almendra." },
         { nombre: "Long Black", precio: 2500, img: "img/long-black.jpg", desc: "Tinto largo, alargado con agua caliente." },
         { nombre: "Aromática", precio: 1500, desc: "Infusión de frutas y hierbas naturales." },
+        { nombre: "Canelita", precio: 2000, desc: "Aromática de canela en leche." },
         { nombre: "Capuchino", precio: 6000, aperitivo: true, img: "img/capuchino.jpg", desc: "Café con leche caliente, un toque de esencia de vainilla y un aperitivo al gusto." },
         { nombre: "Milo Caliente", precios: [{ tam: "9 oz", precio: 4000 }, { tam: "12 oz", precio: 6000 }] },
         { nombre: "Canelazo", precio: 5000, img: "img/canelazo.jpg", desc: "Amareto, canela y leche dulce." },
@@ -42,7 +43,8 @@ window.RESTAURANT = {
         { nombre: "Frappuccino / Granizado", precio: 7500, aperitivo: true, img: "img/frappuccino.jpg", desc: "Café frío con aperitivo al gusto." },
         { nombre: "Café Milenio", precio: 8500, aperitivo: true, img: "img/cafe-milenio.jpg", desc: "Café helado con chantillí." },
         { nombre: "Milo Frío", precios: [{ tam: "9 oz", precio: 4000 }, { tam: "14 oz", precio: 6500 }], img: "img/milo-frio.jpg" },
-        { nombre: "Ice Coffee", precio: 3000, img: "img/ice-coffee.jpg", desc: "Café frío servido sobre hielo." },
+        { nombre: "Ice Coffee con Leche", precio: 7000, img: "img/ice-coffee.jpg", desc: "Café frío con leche servido sobre hielo." },
+        { nombre: "Ice Coffee Negro", precio: 3000, desc: "Café frío negro servido sobre hielo." },
       ],
     },
     {

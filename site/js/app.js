@@ -95,6 +95,12 @@
             </div>
           </li>`));
       });
+      // Nota de aperitivo al final de la sección si tiene ítems marcados con *
+      if (R.aperitivo && (cat.items || []).some((d) => d.aperitivo)) {
+        section.appendChild(el(
+          `<p class="aperitivo-note"><span class="aperitivo-mark">*</span> Aperitivo opcional: ${esc(R.aperitivo)}.</p>`
+        ));
+      }
       menu.appendChild(section);
     });
   }
@@ -108,13 +114,6 @@
     }, { rootMargin: "-15% 0px -70% 0px" });
     $$(".menu-section", menu).forEach((s) => io.observe(s));
     setActive("cat-" + slug(cats[0].nombre));
-  }
-
-  // Nota de aperitivo opcional (ítems marcados con *)
-  const apNote = $("[data-aperitivo-note]");
-  if (apNote && R.aperitivo) {
-    apNote.innerHTML = `<span class="aperitivo-mark">*</span> Aperitivo opcional: ${esc(R.aperitivo)}.`;
-    apNote.hidden = false;
   }
 
   // --- Lightbox: clic en foto/nombre -> imagen grande + descripción ---------

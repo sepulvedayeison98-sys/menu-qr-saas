@@ -165,11 +165,19 @@ a { color: inherit; text-decoration: none; }
 .drink-price.multi .pl { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
 .drink-price.multi .tam { font-family: var(--serif-it); font-style: italic; font-weight: 400; font-size: 12.5px; color: var(--desc); }
 
-/* Marca de aperitivo opcional (*) y su nota al pie */
+/* Marca de aperitivo opcional (*) y su nota al final de cada sección */
 .aperitivo-mark { color: var(--gold); font-weight: 600; }
 .drink-name .aperitivo-mark { margin-left: 3px; font-size: 0.85em; }
-.menu-note { text-align: center; font-family: var(--serif-it); font-style: italic; font-size: 13.5px; line-height: 1.4; color: var(--desc); margin: 0; padding: 26px 30px 0; }
-.menu-note[hidden] { display: none; }
+.aperitivo-note {
+  text-align: center;
+  font-family: var(--serif-it); font-style: italic;
+  font-size: 16px; line-height: 1.45;
+  color: var(--name); margin: 20px 0 0;
+  padding: 16px 18px;
+  border: 1px solid var(--row-border); border-radius: 12px;
+  background: var(--thumb-bg);
+}
+.aperitivo-note .aperitivo-mark { font-size: 1.15em; }
 
 /* Pistas de que la foto/nombre son interactivos */
 .drink-name, .thumb { cursor: pointer; }
