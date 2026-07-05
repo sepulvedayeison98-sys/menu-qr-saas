@@ -35,6 +35,8 @@
     }
     .toolbar .primary { background: var(--gold); color: #171310; }
     .toolbar .ghost { background: transparent; color: #EDE7DC; border-color: rgba(255,255,255,0.3); }
+    .toolbar .ghost.active { background: var(--gold); color: #171310; border-color: transparent; }
+    .toolbar .tabs { display: flex; gap: 6px; }
 
     /* La "hoja": A4 exacto en pantalla, con el padding = margen real de impresion */
     .sheet {
@@ -107,7 +109,11 @@
 <body>
 
   <div class="toolbar">
-    <a class="ghost" href="admin.html">← Volver</a>
+    <nav class="tabs">
+      <a class="ghost" href="index.html">Menú</a>
+      <a class="ghost" href="admin.html">Código QR</a>
+      <a class="ghost active" href="carta-imprimir.html">Carta para imprimir</a>
+    </nav>
     <button class="primary" id="btnImprimir">Imprimir / Guardar PDF</button>
   </div>
 
