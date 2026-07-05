@@ -30,7 +30,7 @@ window.RESTAURANT = {
         { nombre: "Tinto con Amareto", precio: 3500, img: "img/tinto-amareto.jpg", desc: "Tinto con un toque de licor de almendra." },
         { nombre: "Long Black", precio: 2500, img: "img/long-black.jpg", desc: "Tinto largo, alargado con agua caliente." },
         { nombre: "Aromática", precio: 1500, img: "img/aromatica.jpg", desc: "Infusión de frutas y hierbas naturales." },
-        { nombre: "Canelita", precio: 2000, desc: "Aromática de canela en leche." },
+        { nombre: "Canelita", precio: 2000, img: "img/canelita.jpg", desc: "Aromática de canela en leche." },
         { nombre: "Capuchino", precio: 6000, aperitivo: true, img: "img/capuchino.jpg", desc: "Café con leche caliente, un toque de esencia de vainilla y un aperitivo al gusto." },
         { nombre: "Milo Caliente", precios: [{ tam: "9 oz", precio: 4000 }, { tam: "12 oz", precio: 6000 }], img: "img/milo-caliente.jpg" },
         { nombre: "Canelazo", precio: 5000, img: "img/canelazo.jpg", desc: "Amareto, canela y leche dulce." },
