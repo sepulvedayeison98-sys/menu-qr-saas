@@ -59,8 +59,8 @@
     .p-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 14mm; }
     .p-col { min-width: 0; }
 
-    .p-cat { margin-bottom: 5mm; }
-    .p-cat + .p-cat { margin-top: 9mm; }
+    .p-cat { margin-bottom: 4mm; }
+    .p-cat + .p-cat { margin-top: 6mm; }
     .p-cat-label {
       font-family: var(--label); font-weight: 700; font-size: 14px; letter-spacing: 4px;
       color: var(--gold); text-align: center;
@@ -68,18 +68,30 @@
     .p-cat-line { display: flex; justify-content: center; margin: 2.5mm 0 5mm; }
     .p-cat-line span { height: 1px; width: 26px; background: var(--gold); }
 
-    .p-item { padding: 3mm 0; border-bottom: 1px dotted var(--line); }
+    .p-item { display: flex; gap: 3mm; align-items: center; padding: 2mm 0; border-bottom: 1px dotted var(--line); }
     .p-item:last-child { border-bottom: none; }
+    .p-thumb {
+      flex: none; width: 13mm; height: 13mm; border-radius: 1.5mm;
+      overflow: hidden; background: #efeae1; border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-weight: 600; font-size: 13px; color: var(--gold);
+    }
+    .p-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .p-body { flex: 1; min-width: 0; }
     .p-row { display: flex; align-items: baseline; gap: 6px; }
+    .p-row.p-row-multi { align-items: flex-start; }
+    .p-row.p-row-multi .p-name { padding-top: 0.3em; }
+    .p-row.p-row-multi .p-leader { margin-top: 0.55em; }
     .p-name { font-family: var(--label); font-weight: 600; font-size: 14.5px; color: var(--ink); white-space: nowrap; flex: none; }
     .p-star { color: var(--gold); font-weight: 700; margin-left: 2px; }
     .p-leader { flex: 1; border-bottom: 1px dotted var(--line); margin-bottom: 3px; min-width: 6px; }
     .p-price { font-family: var(--label); font-weight: 700; font-size: 14.5px; color: var(--ink); white-space: nowrap; }
-    .p-price.multi { display: flex; gap: 8px; white-space: nowrap; }
-    .p-price.multi .tam { font-family: var(--serif-it); font-style: italic; font-weight: 400; font-size: 12px; color: var(--muted); margin-right: 2px; }
+    .p-price.multi { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5mm; }
+    .p-price.multi .pl { display: flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+    .p-price.multi .tam { font-family: var(--serif-it); font-style: italic; font-weight: 400; font-size: 11.5px; color: var(--muted); }
     .p-desc { font-family: var(--serif-it); font-style: italic; font-size: 13.5px; line-height: 1.3; color: var(--muted); margin-top: 0.8mm; }
 
-    .p-footer { margin-top: 10mm; padding-top: 6mm; border-top: 1px solid var(--line); text-align: center; }
+    .p-footer { margin-top: 6mm; padding-top: 5mm; border-top: 1px solid var(--line); text-align: center; }
     .p-note { font-family: var(--serif-it); font-style: italic; font-size: 13px; color: var(--muted); line-height: 1.4; }
     .p-note b { color: var(--gold); font-style: normal; }
     .p-url { font-family: var(--label); font-size: 10.5px; letter-spacing: 1.5px; color: var(--muted); margin-top: 3mm; }
@@ -136,7 +148,7 @@
       function priceCell(d) {
         if (Array.isArray(d.precios) && d.precios.length) {
           return '<span class="p-price multi">' +
-            d.precios.map(function (p) { return '<span class="tam">' + esc(p.tam) + '</span>' + cop(p.precio); }).join('<span style="width:4px;display:inline-block"></span>') +
+            d.precios.map(function (p) { return '<span class="pl"><span class="tam">' + esc(p.tam) + '</span>' + cop(p.precio) + '</span>'; }).join('') +
             '</span>';
         }
         return '<span class="p-price">' + cop(d.precio) + '</span>';
@@ -148,10 +160,16 @@
         (cat.items || []).forEach(function (d) {
           var star = d.aperitivo ? '<span class="p-star">*</span>' : "";
           var desc = d.desc ? '<p class="p-desc">' + esc(d.desc) + '</p>' : "";
-          html += '<div class="p-item"><div class="p-row">' +
-            '<span class="p-name">' + esc(d.nombre || "") + star + '</span>' +
+          var nombre = d.nombre || "";
+          var inicial = nombre.trim().charAt(0).toUpperCase();
+          var thumb = d.img
+            ? '<div class="p-thumb"><img src="' + esc(d.img) + '" alt=""></div>'
+            : '<div class="p-thumb">' + esc(inicial) + '</div>';
+          var rowClass = "p-row" + (Array.isArray(d.precios) && d.precios.length ? " p-row-multi" : "");
+          html += '<div class="p-item">' + thumb + '<div class="p-body"><div class="' + rowClass + '">' +
+            '<span class="p-name">' + esc(nombre) + star + '</span>' +
             '<span class="p-leader"></span>' + priceCell(d) +
-            '</div>' + desc + '</div>';
+            '</div>' + desc + '</div></div>';
         });
         html += '</div>';
         return html;
