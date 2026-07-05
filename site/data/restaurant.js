@@ -27,7 +27,7 @@ window.RESTAURANT = {
       nombre: "Calientes",
       items: [
         { nombre: "Tinto", precio: 1500, img: "img/tinto.jpg", desc: "Café negro colombiano recién pasado." },
-        { nombre: "Tinto con Amareto", precio: 3500, img: "img/tinto-amareto.jpg", desc: "Tinto con un toque de licor de almendra." },
+        { nombre: "Tinto con Amareto", precio: 3000, img: "img/tinto-amareto.jpg", desc: "Tinto con un toque de licor de almendra." },
         { nombre: "Long Black", precio: 2500, img: "img/long-black.jpg", desc: "Tinto largo, alargado con agua caliente." },
         { nombre: "Aromática", precio: 1500, img: "img/aromatica.jpg", desc: "Infusión de frutas y hierbas naturales." },
         { nombre: "Canelita", precio: 2000, img: "img/canelita.jpg", desc: "Aromática de canela en leche." },
